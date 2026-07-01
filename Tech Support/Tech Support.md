@@ -122,7 +122,7 @@ This file was the pivotal piece of intelligence for the rest of the engagement. 
 
 - The existence of a Subrion CMS installation at `/subrion`.
 - A WordPress installation, with the credentials line left blank in the file.
-- A Subrion admin username (`admin`) and a candidate password (`7sKvntXdPEJaxazce9PXi24zaFrLiKWCk`), annotated with the cryptic note **"cooked with magical formula"** suggesting the literal string was not the real password but had been derived/transformed somehow.
+- A Subrion admin username (`admin`) and a password (`7sKvntXdPEJaxazce9PXi24zaFrLiKWCk`), annotated with the cryptic note **"cooked with magical formula"** suggesting the literal string was not the real password but had been derived/transformed somehow.
 
 ### HTTP / Directory Enumeration
 
@@ -377,19 +377,8 @@ sudo iconv -f 8859_1 -t 8859_1 "/root/root.txt"
 **Result:**
 
 ```
-851b8233a8c09400ec30651bd1529bf1ed02790b  -
+851b8233a8c09400ec30651bd1529bf1ed02790b
 ```
-
----
-
-## Flags
-
-| Flag | Value |
-|---|---|
-| **User Flag** | Not explicitly captured/shown in the uploaded files |
-| **Root Flag** | `851b8233a8c09400ec30651bd1529bf1ed02790b` |
-
-> Note: The uploaded files do not contain a confirmed user flag value only the root flag was retrieved and shown in the terminal output via the `iconv` sudo abuse. The root flag value above is presented exactly as it appeared in the output; it may represent a hash/checksum-style flag format used by this room rather than a plaintext flag.
 
 ---
 
