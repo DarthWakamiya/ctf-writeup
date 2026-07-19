@@ -31,7 +31,7 @@ Here's the LPD manager script, `server.py`, exactly as it came out of the zip:
 import socket
 import threading
 import subprocess
-import subprocess
+import os
 
 VALID_QUEUE = os.environ.get("LPD_QUEUE")
 
