@@ -1,10 +1,10 @@
-# SkillsBit CTF — Network Reconnaissance
+# SkillsBit CTF — Decrypting SSL/TLS traffic using Wireshark and private keys
 
 ## Introduction
 
 This CTF is from the **SkillsBit** platform, with the main topic being **Reconnaissance**.
 
-However, this challenge is more focused on **network forensics**. Everything started from a file called `snoop.pcap`, which contained encrypted communication traffic. At first, I could see the communication between the client and the server, but I could not understand what the traffic meant because most of it was encrypted.
+However, this challenge is more focused on **Network Forensics**. Everything started from a file called `snoop.pcap`, which contained encrypted communication traffic. At first, I could see the communication between the client and the server, but I could not understand what the traffic meant because most of it was encrypted.
 
 The goal was to investigate the traffic, find useful clues, decrypt the communication, and eventually find the flag.
 
