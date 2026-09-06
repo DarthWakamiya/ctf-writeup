@@ -16,7 +16,7 @@ http://10.129.245.214:3000/ [200 OK] Country[RESERVED][ZZ], HTML5, IP[10.129.245
 
 That told me a lot in one shot: the app is called **ReactorWatch**, described as a "Core Monitoring System," and it's built on **Next.js** confirmed both by the `X-Powered-By` header and by the very Next.js-specific headers like `x-nextjs-cache` and `x-nextjs-prerender`. Seeing a specific framework like that immediately made me think about checking for known, recent CVEs in Next.js itself, since framework-level bugs tend to be extremely reliable once you match the exact vulnerable version.
 
-![Wappalyzer output showing the Next.js version](./images/reactor/shot.png)
+![Wappalyzer output showing the Next.js version](./shot.png)
 
 ## Service Enumeration
 
@@ -57,7 +57,7 @@ node exploit.js http://10.129.245.214:3000 "whoami"
 
 The script itself couldn't directly read the command output back over HTTP (hence "PROBABLE SUCCESS" and the 500 error, since the injected code throws an error after running to leak output into the server's error handling), so I needed another way to actually confirm code execution was happening. I tried `ls -la` next, same result a 500 error, still no directly visible output, so I couldn't be 100% sure yet that commands were really running on the box.
 
-![Running the CVE-2025-55182 exploit against ReactorWatch](./images/reactor/exploit.png)
+![Running the CVE-2025-55182 exploit against ReactorWatch](./exploit.png)
 
 To get a real, undeniable confirmation, I switched to something I could verify completely out-of-band: ICMP. I set up a `tcpdump` listener on my `tun0` interface (my HTB VPN interface) to watch for any ping traffic coming back from the target:
 
@@ -77,7 +77,7 @@ node exploit.js http://10.129.245.214:3000 "ping -c 4 10.10.14.224"
 
 And sure enough, my tcpdump session lit up with real ICMP echo requests coming from the target's IP:
 
-![tcpdump capturing ICMP replies confirming RCE](./images/reactor/icmp.png)
+![tcpdump capturing ICMP replies confirming RCE](./icmp.png)
 
 That was the confirmation I needed the target was genuinely executing my commands. Time to get an actual shell instead of blind command execution, I fired off the exploit one more time, this time with a bash reverse shell one-liner as the payload:
 
@@ -104,7 +104,7 @@ uid=999(node) gid=988(node) groups=988(node)
 
 Running as `node`, which makes total sense given the app is a Next.js/Node.js service and the exploit ran code directly inside that server process.
 
-![Reverse shell landing as the node user](./images/reactor/shell.png)
+![Reverse shell landing as the node user](./shell.png)
 
 # Privilege Escalation
 
@@ -189,7 +189,7 @@ console.log('uptime-monitor up, pid=' + process.pid);
 
 Just an uptime-checking script that pings the ReactorWatch app every 30 seconds and logs the results to a CSV nothing dangerous in the code itself. The real vulnerability wasn't in what the script does, it's that it's running with an **open debugger port as root**, which is a well-known misconfiguration: anyone who can reach `127.0.0.1:9229` can attach to that process and run arbitrary code as whoever owns it.
 
-![Finding the root-owned Node process with an open inspector port](./images/reactor/privesc.png)
+![Finding the root-owned Node process with an open inspector port](./privesc.png)
 
 # Root
 
@@ -242,9 +242,9 @@ node@reactor:/opt/uptime-monitor$ cat /tmp/user.txt
 f84a61e036cef53c843718*************
 ```
 
-![user flags captured](./images/reactor/user.png)
+![user flags captured](./user.png)
 
-![root flags captured](./images/reactor/root.png)
+![root flags captured](./root.png)
 
 Both flags in hand, box fully rooted and a really fun reminder of how dangerous the Node inspector protocol is when it's left open on a privileged process, even when it's only bound to localhost.
 
