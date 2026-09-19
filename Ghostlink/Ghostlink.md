@@ -63,7 +63,7 @@ So this is clearly a Windows Server domain controller. The hostname `dc01.ghostl
 
 The most interesting thing on this scan though? Port **1883 MQTT**. That's not something you see every day on a Windows DC. The `mqtt-subscribe` script even shoid that the broker allows anonymous connections and is actively publishing messages. That's our first real lead.
 
-![Nmap](./images/nmap.png)
+![Nmap](./Images/nmap.png)
 
 ### ib Enumeration
 
@@ -160,7 +160,7 @@ Then i started ghostsurf:
 
 The health check bot running as `svc_canary` hit our listener and i relayed its NTLM authentication to the target.now i have an active SOCKS session authenticated as `GHOSTLINK\SVC_CANARY`.
 
-![GhostSurf](./images/ghostsurf.png)
+![GhostSurf](./Images/ghostsurf.png)
 
 ### The Race Condition Problem
 
@@ -222,8 +222,8 @@ curl -x socks5h://127.0.0.1:1080 \
 
 92 bytes received. Running `cat win.ini` shoid the real Windows initialization file content the traversal worked.
 
-![Curl](./images/Curl.png)
-![win.ini](./images/win_output.png)
+![Curl](./Images/Curl.png)
+![win.ini](./Images/win_output.png)
 
 ### Forensic Analysis: Registry Hive
 
@@ -582,11 +582,11 @@ bloodhound-python -u nvirelli -p u47YUclrDiwWxBheaSzI -d ghostlink.htb -c All -n
 
 Then loaded the data into BloodHound CE.
 
-![Bloodhound](./images/blood1.png)
+![Bloodhound](./Images/blood1.png)
 
 The first screenshot shows the domain user landscape. All the accounts i'd been seeing throughout `nvirelli`, `svc_canary`, `zkovacs`, `ohexley`, `vroth`, `dsoren`, `lnoctis` are all standard domain users. Nothing immediately stands out about their group memberships.
 
-![BloodHound](./images/blood2.png)
+![BloodHound](./Images/blood2.png)
 
 The pathfinding query from `nvirelli` to `ADMINISTRATOR` returned **"Path not found"** BloodHound couldn't identify a clean direct exploitation path. The graph does show some interesting edges, `nvirelli` has `GenericAll` on Account Operators and `AddKeyCredentialLink` to Key Admins / Enterprise Key Admins groups. These could potentially be exploited, but they would require more complex chaining.
 
