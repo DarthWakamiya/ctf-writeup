@@ -588,7 +588,7 @@ The first screenshot shows the domain user landscape. All the accounts i'd been 
 
 ![BloodHound](./Images/blood2.png)
 
-The pathfinding query from `nvirelli` to `ADMINISTRATOR` returned **"Path not found"** BloodHound couldn't identify a clean direct exploitation path. The graph does show some interesting edges, `nvirelli` has `GenericAll` on Account Operators and `AddKeyCredentialLink` to Key Admins / Enterprise Key Admins groups. These could potentially be exploited, but they would require more complex chaining.
+The graph does show some interesting edges, `nvirelli` has `GenericAll` on Account Operators and `AddKeyCredentialLink` to Key Admins / Enterprise Key Admins groups. These could potentially be exploited, but they would require more complex chaining.
 
 Rather than going down that rabbit hole, i noticed something else. from our earlier nmap scan found that there's ADCS CA `ghostlink-GPZ-OP26-SECURE-CA` That's a more direct path.
 
