@@ -588,7 +588,7 @@ The first screenshot shows the domain user landscape. All the accounts i'd been 
 
 ![BloodHound](./Images/blood2.png)
 
-The graph does show some interesting edges, `nvirelli` has `GenericAll` on Account Operators and `AddKeyCredentialLink` to Key Admins / Enterprise Key Admins groups. These could potentially be exploited, but they would require more complex chaining.
+A closer inspection of the BloodHound graph reveals that nvirelli is a low-privileged account tightly controlled by the domain's architecture, rather than controlling it. but this account remains completely viable as a base for infra level network attacks like ADCS relaying
 
 Rather than going down that rabbit hole, i noticed something else. from our earlier nmap scan found that there's ADCS CA `ghostlink-GPZ-OP26-SECURE-CA` That's a more direct path.
 
