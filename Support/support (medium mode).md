@@ -392,8 +392,8 @@ The SDDL syntax for an Access Control Entry (ACE) granting full access to our co
 ```
 
 Breaking down this SDDL string:
-* `O:BAD:` — Sets the Owner and Group as Built-in Administrators.
-* `(A;;...;;;<SID>)` — An **Allow** (`A`) ACE granting full directory rights (`CCDCLCSWRPWPDTLOCRSDRCWDWO`) specifically to our SID `S-1-5-21-1677581083-3380853377-188903654-6102`.
+* `O:BAD:` Sets the Owner and Group as Built-in Administrators.
+* `(A;;...;;;<SID>)` An **Allow** (`A`) ACE granting full directory rights (`CCDCLCSWRPWPDTLOCRSDRCWDWO`) specifically to our SID `S-1-5-21-1677581083-3380853377-188903654-6102`.
 
 We then initialize a raw security descriptor object and convert it to a binary byte array:
 
