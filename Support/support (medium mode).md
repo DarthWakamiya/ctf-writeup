@@ -244,8 +244,8 @@ dSCorePropagationData: 16010101000000.0Z
 ```
 
 Notice two critical pieces of information:
-1. `info: Ironside47pleasure40Watchful` — An administrator left a plaintext password in the user's `info` attribute!
-2. `memberOf: CN=Remote Management Users,CN=Builtin,DC=support,DC=htb` — The user is explicitly allowed to connect remotely via WinRM.
+1. `info: Ironside47pleasure40Watchful` An administrator left a plaintext password in the user's `info` attribute!
+2. `memberOf: CN=Remote Management Users,CN=Builtin,DC=support,DC=htb` The user is explicitly allowed to connect remotely via WinRM.
 
 Let's verify these credentials using NetExec:
 
