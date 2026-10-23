@@ -43,7 +43,7 @@ PORT      STATE SERVICE       VERSION
 ...
 ```
 
-![screenshot](.\images\rdp_nmap.png)
+![screenshot](./images/rdp_nmap.png)
 
 Standard Windows DC layout with one note **port 3389 (RDP) is open**. This detail gets filed away and forgotten until it saves the run later. Also present is port 443 with HTTPS, which turns out to leak a CA name via SSL cert error.
 
@@ -141,7 +141,7 @@ One Kerberoastable account: `CODY_ROY`.
 hashcat -m 13100 cody_hash.txt /usr/share/wordlists/rockyou.txt
 ```
 
-![screenshot](.\images\TGS.png)
+![screenshot](./images/TGS.png)
 
 **CODY_ROY : MKO)mko0** cracked in 2 seconds.
 
@@ -160,11 +160,11 @@ bloodyad -d thm.local -H 10.49.131.236 -u CODY_ROY -p 'MKO)mko0' get bloodhound
 
 Uploading and analyzing the data. A few interesting things emerge from the BloodHound graph:
 
-![screenshot](.\images\christian.png)
+![screenshot](./images/christian.png)
 
 `CHRISTIAN_SANFORD` owns `READER ADMINS` and has `WriteDacl` on two WinRM-related GPOs affecting 57 objects (20 OUs, 37 users). On paper this is a significant attack path but to use it, we need to compromise CHRISTIAN_SANFORD first.
 
-![screenshot](.\images\admingroup.png)
+![screenshot](./images/admingroup.png)
 
 `ADMINISTRATORS` group membership confirms: `CHRISTIAN_SANFORD` and more are admins. Six high-value targets identified.
 
@@ -206,7 +206,7 @@ HTTP/server.secure.com   CODY_ROY           Remote Desktop Users
 
 `CHRISTIAN_SANFORD` has **two SPNs** that's unusual and suggests a higher-value account. Got the TGS hash. Given the BloodHound intel (admin, owns READER ADMINS, WriteDacl on WinRM GPOs), cracking this would open a lot.
 
-![screenshot](.\images\chris_hash.png)
+![screenshot](./images/chris_hash.png)
 
 **Hashcat: Status Exhausted.** CHRISTIAN_SANFORD's password is not in rockyou. This path is dead for now.
 
@@ -222,7 +222,7 @@ One thing worth trying when you have a cracked password is see if anyone else us
 nxc smb 10.48.134.138 -u users_clean.txt -p 'MKO)mko0' --continue-on-success
 ```
 
-![screenshot](.\images\pw_spray.png)
+![screenshot](./images/pw_spray.png)
 
 ```
 [+] thm.local\zachary_hunt:MKO)mko0
@@ -234,7 +234,7 @@ nxc smb 10.48.134.138 -u users_clean.txt -p 'MKO)mko0' --continue-on-success
 
 Lookin back at BloodHound to see what privilege ZACHARY_HUNT user has
 
-![screenshot](.\images\zachary.png)
+![screenshot](./images/zachary.png)
 
 **ZACHARY_HUNT has `GenericWrite` on JERRI_LANCASTER.**
 
@@ -266,7 +266,7 @@ TGS obtained. The tool automatically sets a temporary SPN on JERRI_LANCASTER, re
 hashcat -m 13100 jerri_hash.txt /usr/share/wordlists/rockyou.txt
 ```
 
-![screenshot](.\images\jerri_hash.png)
+![screenshot](./images/jerri_hash.png)
 
 **JERRI_LANCASTER : lovinlife!** cracked in 2 seconds.
 
@@ -279,11 +279,11 @@ nxc smb 10.49.182.89 -u jerri_lancaster -p 'lovinlife!'
 
 Checking what JERRI_LANCASTER can do in BloodHound:
 
-![screenshot](.\images\jerri.png)
+![screenshot](./images/jerri.png)
 
 JERRI_LANCASTER is the only member of the `READER ADMINS` group. That group looks interesting on paper but has zero local admin or execution privileges.
 
-![screenshot](.\images\jerri_privilege.png)
+![screenshot](./images/jerri_privilege.png)
 
 `WriteOwner` on `READER ADMINS` means JERRI_LANCASTER can take ownership of the group which would let her grant herself `GenericAll` on it. But `READER ADMINS` leads nowhere useful. The group has no local admin rights anywhere, no execution privileges, and no ACEs over privileged objects. CHRISTIAN_SANFORD owns the group but without compromising CHRISTIAN_SANFORD, owning READER ADMINS doesn't help.
 
@@ -365,7 +365,7 @@ C:\Scripts> dir
 C:\Scripts> type syncer.ps1
 ```
 
-![screenshot](.\images\rdp.png)
+![screenshot](./images/rdp.png)
 
 ```powershell
 # Import Active Directory module
@@ -391,7 +391,7 @@ A PowerShell script that syncs AD objects between `ad.thm.local` (primary) and `
 
 Before acting on the creds, confirm what SANFORD_DAUGHERTY can do. BloodHound data already collected:
 
-![screenshot](.\images\sandford.png)
+![screenshot](./images/sandford.png)
 
 `SANFORD_DAUGHERTY` is a **Domain Admin** via `DOMAIN ADMINS` > `ADMINISTRATORS`. The syncer script credentials are DA credentials stored in plaintext on a machine any domain user can RDP into. Clean finding.
 
@@ -420,7 +420,7 @@ impacket-secretsdump 'ad2.thm.local/SANFORD_DAUGHERTY:RESET_ASAP123@ad2.thm.loca
   -dc-ip 10.48.131.138
 ```
 
-![screenshot](.\images\smbexec.png)
+![screenshot](./images/smbexec.png)
 
 ```
 [*] Dumping local SAM hashes
