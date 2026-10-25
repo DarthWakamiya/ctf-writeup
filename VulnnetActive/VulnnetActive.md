@@ -123,7 +123,7 @@ Responder spins up a fake SMB server on our tun0 interface, ready to capture any
 (error) ERR Changing directory: Permission denied
 ```
 
-![screenshot](.\images\responder.png)
+![screenshot](./images/responder.png)
 
 The error `Permission denied` comes from Redis failing to actually change to the UNC directory but the important thing is that **before** returning that error, Windows already initiated the SMB connection to our fake share, and Responder caught the authentication:
 
