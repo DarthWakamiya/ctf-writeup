@@ -1,4 +1,4 @@
-# HackSmarterSec TryHackMe Writeup
+# HackSmarterSec Writeup
 
 ---
 

@@ -1,4 +1,4 @@
-# Operation Endgame TryHackMe Writeup
+# Operation Endgame Writeup
 
 ---
 

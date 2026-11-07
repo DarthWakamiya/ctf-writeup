@@ -1,4 +1,4 @@
-# VulnNet: Active TryHackMe Writeup
+# VulnNet Active Writeup
 
 ---
 

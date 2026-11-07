@@ -1,4 +1,4 @@
-# FusionCorp TryHackMe Writeup
+# FusionCorp Writeup
 
 ---
 
@@ -9,7 +9,7 @@
 | **Name** | FusionCorp |
 | **Platform** | TryHackMe |
 | **OS** | Windows Server 2019 |
-| **Difficulty** | Medium |
+| **Difficulty** | Hard |
 | **Domain** | fusion.corp |
 | **DC** | FUSION-DC (Fusion-DC.fusion.corp) |
 

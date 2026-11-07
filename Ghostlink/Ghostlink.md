@@ -1,4 +1,4 @@
-# Ghostlink HackTheBox Writeup
+# Ghostlink Writeup
 
 ---
 

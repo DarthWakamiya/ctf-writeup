@@ -1,4 +1,4 @@
-# VulnNet: Roasted TryHackMe Writeup
+# VulnNet Roasted Writeup
 
 ---
 

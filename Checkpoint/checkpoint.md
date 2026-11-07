@@ -1,4 +1,4 @@
-# Checkpoint HackTheBox Writeup
+# Checkpoint Writeup
 
 ---
 
