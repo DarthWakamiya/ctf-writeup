@@ -5,7 +5,7 @@
 | Machine | PingPong |
 |---|---|
 | OS | Windows Server |
-| Difficulty | Hard |
+| Difficulty | Insane |
 | Target 1 | 10.129.50.113 / 10.129.65.236 (`dc1.ping.htb`) |
 | Target 2 | 192.168.2.2 (`dc2.pong.htb`) |
 
